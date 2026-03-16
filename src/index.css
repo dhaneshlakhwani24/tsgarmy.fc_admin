@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(240, 70, 93, 0.24), transparent 36%),
+    radial-gradient(circle at 86% 18%, rgba(74, 137, 255, 0.22), transparent 34%),
+    radial-gradient(circle at 58% 84%, rgba(255, 123, 61, 0.17), transparent 38%),
+    linear-gradient(160deg, #070811 0%, #101426 54%, #161524 100%);
+  color: #f3f0eb;
+}
