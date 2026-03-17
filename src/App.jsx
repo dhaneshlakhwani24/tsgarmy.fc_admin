@@ -276,18 +276,15 @@ function ScheduleManagerPage({ authUser, onLogout, canAccess }) {
   useEffect(() => {
     let sse = null
     let reconnectTimer = null
+    let pollTimer = null
     let reconnectAttempts = 0
-    const maxReconnectAttempts = 10
     const reconnectDelay = (attempt) => Math.min(1000 * Math.pow(1.5, attempt), 30000)
 
     const connectSSE = () => {
-      if (reconnectAttempts >= maxReconnectAttempts) {
-        return
-      }
-
       try {
         sse = new EventSource(`${API_URL}/api/events`)
         sse.addEventListener('schedules', loadSchedules)
+        sse.addEventListener('connected', loadSchedules)
         sse.onopen = () => {
           reconnectAttempts = 0
         }
@@ -304,10 +301,14 @@ function ScheduleManagerPage({ authUser, onLogout, canAccess }) {
     }
 
     connectSSE()
+    pollTimer = window.setInterval(loadSchedules, 15000)
 
     return () => {
       if (reconnectTimer) {
         window.clearTimeout(reconnectTimer)
+      }
+      if (pollTimer) {
+        window.clearInterval(pollTimer)
       }
       sse?.close()
     }
